@@ -35,8 +35,6 @@ def exclusive(slug: Union[None, str, Callable] = None):
                 slug_string = slug
             else:
                 raise TypeError('Slug must be string or callable')
-            if ExclusiveTransaction.objects.filter(slug=slug_string, ended__isnull=True).exists():
-                raise ExclusiveTransactionException('Previous transaction has not been ended')
             try:
                 transaction: ExclusiveTransaction = ExclusiveTransaction.objects.create(slug=slug_string)
             except IntegrityError:
