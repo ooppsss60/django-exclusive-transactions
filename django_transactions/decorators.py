@@ -7,7 +7,7 @@ from django_transactions.models import ExclusiveTransaction
 from django_transactions.exceptions import ExclusiveTransactionException
 
 
-def exclusive(slug: Union[str, Callable]):
+def exclusive(slug: Union[None, str, Callable] = None):
     """
     Example of use:
 
@@ -27,7 +27,9 @@ def exclusive(slug: Union[str, Callable]):
     """
     def inner(func):
         def wrapper(*args, **kwargs):
-            if isinstance(slug, Callable):
+            if slug is None:
+                slug_string = func.__name__
+            elif isinstance(slug, Callable):
                 slug_string = slug()
             elif isinstance(slug, str):
                 slug_string = slug
