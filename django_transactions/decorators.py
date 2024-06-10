@@ -42,9 +42,9 @@ def exclusive(slug: Union[None, str, Callable] = None):
                 raise ExclusiveTransactionException('Previous transaction has not been ended')
             try:
                 result = func(*args, **kwargs)
-            except Exception as e:
-                transaction.error = str(e)
-                raise e
+            except Exception as error:
+                transaction.error = str(error)
+                raise error
             finally:
                 transaction.ended = now()
                 transaction.save(update_fields=('ended', 'error'))

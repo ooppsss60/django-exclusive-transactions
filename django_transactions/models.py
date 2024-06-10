@@ -5,7 +5,7 @@ from django.db.models import Q
 class ExclusiveTransaction(models.Model):
     slug = models.CharField(max_length=256)
     started = models.DateTimeField(auto_now_add=True)
-    ended = models.DateTimeField(null=True, blank=True)
+    ended = models.DateTimeField(null=True)
     error = models.TextField(null=True)
 
     class Meta:
